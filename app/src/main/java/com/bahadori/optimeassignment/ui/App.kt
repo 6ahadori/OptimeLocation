@@ -1,4 +1,4 @@
-package com.bahadori.optimeassignment
+package com.bahadori.optimeassignment.ui
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
