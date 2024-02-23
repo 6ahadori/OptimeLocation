@@ -1,16 +1,12 @@
 package com.bahadori.optimeassignment.core.data.service
 
-import android.Manifest
 import android.app.Service
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.location.Location
 import android.os.IBinder
 import android.os.Looper
-import android.util.Log
-import androidx.core.app.ActivityCompat
 import com.bahadori.optimeassignment.core.common.Constants.LOCATION_INTERVAL
-import com.bahadori.optimeassignment.core.common.Constants.TAG
+import com.bahadori.optimeassignment.core.common.ext.checkLocationPermission
 import com.bahadori.optimeassignment.core.domain.repository.LocationRepository
 import com.bahadori.optimeassignment.core.notification.NotificationHelper
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -33,7 +29,10 @@ class LocationService : Service() {
     private val locationCallback: (Location?) -> Unit = { location ->
         if (location != null) {
             locationRepository.onLocationUpdated(location)
-            notificationHelper.showNotification("Current Location", location.latitude.toString())
+            notificationHelper.showNotification(
+                "Current Location",
+                "lat:${location.latitude}, long:${location.longitude}"
+            )
         }
     }
 
@@ -56,21 +55,8 @@ class LocationService : Service() {
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
                 .build()
 
-            if (ActivityCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
+            if (checkLocationPermission()) {
+                onDestroy()
                 return super.onStartCommand(intent, flags, startId)
             }
 
