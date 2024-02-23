@@ -43,7 +43,7 @@ class NotificationHelper @Inject constructor(
     }
 
     fun startForeground(service: Service) {
-        val notification = buildNotification("Observing Location", "Connection State")
+        val notification = buildNotification("Observing Location", "Connecting...")
         service.startForeground(ONGOING_NOTIFICATION_ID, notification)
     }
 

@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">OptimeAssignment</string>
+    <string name="please_turn_on_the_location_for_app_functionality">Please turn on the location for app functionality!</string>
+    <string name="there_is_no_location_data_yet">There is no location data yet.</string>
 </resources>

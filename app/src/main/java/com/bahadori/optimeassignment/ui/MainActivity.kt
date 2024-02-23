@@ -8,15 +8,14 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.LaunchedEffect
 import androidx.lifecycle.lifecycleScope
+import com.bahadori.optimeassignment.R
 import com.bahadori.optimeassignment.core.common.ext.showMessage
 import com.bahadori.optimeassignment.core.data.service.LocationService
 import com.bahadori.optimeassignment.core.designsystem.theme.OptimeAssignmentTheme
 import com.bahadori.optimeassignment.core.domain.usecase.IsGpsOn
 import com.bahadori.optimeassignment.feature.location.LocationRoute
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
-import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
-import com.google.accompanist.permissions.rememberPermissionState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -71,7 +70,7 @@ class MainActivity : ComponentActivity() {
                 }
 
                 if (result.isFailure) {
-                    showMessage("Please turn on the location for app functionality!")
+                    showMessage(getString(R.string.please_turn_on_the_location_for_app_functionality))
                 }
             }
         }
